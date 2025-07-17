@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build-and-analyze:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "21"
+          cache: maven
+
+      - name: Cache Node.js and npm for frontend-maven-plugin
+        id: cache-node-npm
+        uses: actions/cache@v4
+        with:
+          path: |
+            **/target/node
+          key: ${{ runner.os }}-node-npm-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-node-npm-
+
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: |
+            **/target/node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+
+      - name: Build with Maven (including frontend-maven-plugin)
+        run: mvn clean install -DskipTests
+
+      - name: Cache Tailwind CSS build output
+        id: cache-tailwind-output
+        uses: actions/cache@v4
+        with:
+          path: |
+            **/target/classes/static/css/main.css
+          key: ${{ runner.os }}-tailwind-css-${{ hashFiles('src/main/resources/static/css/input.css') }}
+          restore-keys: |
+            ${{ runner.os }}-tailwind-css

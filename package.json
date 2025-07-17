@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "build": "mkdir -p target/classes/static/css && tailwindcss -i src/main/resources/static/css/input.css -o target/classes/static/css/main.css --minify",
+    "watch": "mkdir -p target/classes/static/css && tailwindcss -i src/main/resources/static/css/input.css -o target/classes/static/css/main.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.11",
+    "prettier-plugin-tailwindcss": "^0.6.14",
+    "tailwindcss": "^4.1.11"
+  }
+}

@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: invoice-management
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info

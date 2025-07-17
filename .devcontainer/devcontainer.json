@@ -1,0 +1,52 @@
+{
+  "name": "Invoice Management",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "21",
+      "jdkDistro": "tem"
+    },
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "version": "28.3.0",
+      "enableNonRootDocker": true
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vmware.vscode-boot-dev-pack",
+        "josevseb.google-java-format-for-vs-code",
+        "redhat.vscode-xml",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "editorconfig.editorconfig"
+      ],
+      "settings": {
+        "editor.detectIndentation": false,
+        "editor.formatOnSave": true,
+        "java.saveActions.organizeImports": true,
+        "java.sources.organizeImports.staticStarThreshold": 1,
+        "[html]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[java]": {
+          "editor.defaultFormatter": "josevseb.google-java-format-for-vs-code"
+        },
+        "[json][jsonc]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[xml]": {
+          "editor.defaultFormatter": "redhat.vscode-xml"
+        }
+      }
+    }
+  },
+  "postCreateCommand": "npm install",
+  "containerEnv": {
+    "TESTCONTAINERS_HOST_OVERRIDE": "host.docker.internal"
+  },
+  "remoteUser": "vscode"
+}
